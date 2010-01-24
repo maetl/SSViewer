@@ -1,4 +1,6 @@
 <?php
+require_once 'State.php';
+
 /**
  * Experimental scanner for the SilverStripe template syntax.
  *
@@ -58,30 +60,7 @@ class SS_TemplateScanner {
 		$this->length = strlen($content);
 		$this->cursor = 0;
 		$this->line = 1;
-	}
-	
-	function emitText($chars) {
-		echo $chars;
-	}
-	
-	function emitBlockScope($keyword) {
-		echo "[$keyword]";
-	}
-	
-	function emitIdentifier($keyword) {
-		echo "Obj:[$keyword]";
-	}
-	
-	function emitObjectBinding() {
-		echo "->";
-	}
-	
-	function emitDataBindingParameter($param) {
-		echo "Arg:[$param]";
-	}
-	
-	function emitComment($comment) {
-		echo "Comment:[$comment]";
+		$this->template = new SS_TemplateStateBuffer();
 	}
 
 	function scanIdentifier() {
@@ -115,7 +94,7 @@ class SS_TemplateScanner {
 	function scanWhilePattern($pattern) {
 		$char = $this->scanForward();
 		$token = "";
-		while (preg_match($pattern, $char)) {
+		while ($this->cursor < $this->length && preg_match($pattern, $char)) {
 			$token .= $char;
 			$char = $this->scanForward();
 		}
@@ -142,13 +121,14 @@ class SS_TemplateScanner {
 			$this->enterDataBindingState();
 		} elseif ($char == "'") {
 			$string = $this->scanString();
-			$this->emitDataBindingParameter($string);
+			$this->template->emitDataBindingParameter($string);
+			
 			$this->scanForward();
 			$this->enterArgumentList();
 		} elseif($this->isInteger($char)) {
 			$this->scanBack();
 			$integer = $this->scanInteger();
-			$this->emitDataBindingParameter($integer);
+			$this->template->emitDataBindingParameter($integer);
 			$this->enterArgumentList();
 		}
 	}
@@ -158,10 +138,10 @@ class SS_TemplateScanner {
 		if ($this->isIdentifier($char)) {
 			$this->scanBack();
 			$keyword = $this->scanIdentifier();
-			$this->emitIdentifier($keyword);
+			$this->template->emitIdentifier($keyword);
 			$this->enterDataBindingState();
 		} elseif ($char == '.') {
-			$this->emitObjectBinding();
+			$this->template->emitObjectBinding();
 			$this->enterDataBindingState();
 		} elseif ($char == '(') {
 			$this->enterArgumentList();
@@ -187,7 +167,7 @@ class SS_TemplateScanner {
 		} elseif ($this->isIdentifier($char)) {
 			$this->scanBack();
 			$keyword = $this->scanIdentifier();
-			$this->emitBlockScope($keyword);
+			$this->template->emitBlockScope($keyword);
 			$this->enterControlExpressionState();
 			$this->enterControlTagState();
 		} elseif ($char == '%') {
@@ -199,7 +179,7 @@ class SS_TemplateScanner {
 			$next = $this->scanForward();
 			if ($next == '-') {
 				$comment = $this->scanUntil('--%>');
-				$this->emitComment($comment);
+				$this->template->emitComment($comment);
 				$this->cursor += 4;
 			}
 		}
@@ -212,7 +192,7 @@ class SS_TemplateScanner {
 			if ($next == '%') {
 				$this->enterControlTagState();
 			} else {
-				$this->emitText($char.$next);
+				$this->template->emitText($char.$next);
 			}
 		} elseif ($char == '$') {
 			$next = $this->scanForward();
@@ -223,9 +203,9 @@ class SS_TemplateScanner {
 			}
 		} elseif ($char == "\n") {
 			$this->line += 1;
-			$this->emitText($char);
+			$this->template->emitText($char);
 		} else {
-			$this->emitText($char);
+			$this->template->emitText($char);
 		}
 	}
 
