@@ -56,7 +56,7 @@ class SS_TemplateScanner {
 	function __construct($content) {
 		$this->content = $content;
 		$this->length = strlen($content);
-        $this->cursor = 0;
+		$this->cursor = 0;
 		$this->line = 1;
 	}
 	

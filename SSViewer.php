@@ -1,51 +1,8 @@
 <?php
 /**
- * The SSViewer executes a .ss template file.
- * The SSViewer class handles rendering of .ss templates.  In addition to a full template in
- * the views folder, a template in views/Content or views/Layout will be rendered into $Content and
- * $Layout, respectively.
+ * This is the legacy SilverStripe template engine.
  *
- * Compiled templates are cached.  If you put ?flush=1 on your URL, it will force the template to be recompiled.  This
- * is a hack; the system should really detect when a page needs re-fetching.
- * 
- * Works with the global $_TEMPLATE_MANIFEST which is compiled by {@link ManifestBuilder->getTemplateManifest()}.
- * This associative array lists all template filepaths by "identifier", meaning the name
- * of the template without its path or extension.
- * 
- * Example:
- * <code>
- * array(
- *  'LeftAndMain' => 
- *  array (
- * 	'main' => '/my/system/path/cms/templates/LeftAndMain.ss',
- *  ),
- * 'CMSMain_left' => 
- *   array (
- *     'Includes' => '/my/system/path/cms/templates/Includes/CMSMain_left.ss',
- *   ),
- * 'Page' => 
- *   array (
- *     'themes' => 
- *     array (
- *       'blackcandy' => 
- *       array (
- *         'Layout' => '/my/system/path/themes/blackcandy/templates/Layout/Page.ss',
- *         'main' => '/my/system/path/themes/blackcandy/templates/Page.ss',
- *       ),
- *       'blue' => 
- *       array (
- *         'Layout' => '/my/system/path/themes/mysite/templates/Layout/Page.ss',
- *         'main' => '/my/system/path/themes/mysite/templates/Page.ss',
- *       ),
- *     ),
- *   ),
- *   // ...
- * )
- * </code>
- *
- * @todo Fix the broken caching.
- * @package sapphire
- * @subpackage view
+ * Need to reference the existing regex behavior in the new scanner.
  */
 class SSViewer {
 	
