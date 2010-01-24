@@ -121,14 +121,14 @@ class SS_TemplateScanner {
 			$this->enterDataBindingState();
 		} elseif ($char == "'") {
 			$string = $this->scanString();
-			$this->template->emitDataBindingParameter($string);
+			$this->template->emitViewableDataBindingParameter($string);
 			
 			$this->scanForward();
 			$this->enterArgumentList();
 		} elseif($this->isInteger($char)) {
 			$this->scanBack();
 			$integer = $this->scanInteger();
-			$this->template->emitDataBindingParameter($integer);
+			$this->template->emitViewableDataBindingParameter($integer);
 			$this->enterArgumentList();
 		}
 	}
@@ -138,10 +138,10 @@ class SS_TemplateScanner {
 		if ($this->isIdentifier($char)) {
 			$this->scanBack();
 			$keyword = $this->scanIdentifier();
-			$this->template->emitIdentifier($keyword);
+			$this->template->emitViewableDataObj($keyword);
 			$this->enterDataBindingState();
 		} elseif ($char == '.') {
-			$this->template->emitObjectBinding();
+			$this->template->emitViewableDataBinding();
 			$this->enterDataBindingState();
 		} elseif ($char == '(') {
 			$this->enterArgumentList();
@@ -157,6 +157,13 @@ class SS_TemplateScanner {
 		} elseif ($this->isIdentifier($char)) {
 			$this->scanBack();
 			$this->enterDataBindingState();
+		} elseif ($char == '%') {
+			$next = $this->scanForward();
+			if ($next != '>') {
+				throw new Exception("Unclosed tag");
+			}
+			$this->template->emitBlockScopeYield();
+			$this->scanBack();
 		}
 	}
 
@@ -175,6 +182,7 @@ class SS_TemplateScanner {
 			if ($next != '>') {
 				throw new Exception("Unclosed tag");
 			}
+			$this->template->emitBlockScopeYield();
 		} elseif ($char == '-') {
 			$next = $this->scanForward();
 			if ($next == '-') {
@@ -198,7 +206,9 @@ class SS_TemplateScanner {
 			$next = $this->scanForward();
 			if ($this->isIdentifier($next)) {
 				$this->scanBack();
+				$this->template->emitVariablePrintStart();
 				$this->enterDataBindingState();
+				$this->template->emitVariablePrintEnd();
 				$this->scanBack();
 			}
 		} elseif ($char == "\n") {
