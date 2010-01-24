@@ -106,10 +106,10 @@ class SS_TemplateScanner {
 
 	function scanUntil($string) {
 		$anchor = $this->cursor;
-        while ($this->cursor < $this->length && strpos($string, $this->content{$this->cursor}) === false) {
-            $this->cursor++;
-        }
-        return substr($this->content, $anchor, $this->cursor - $anchor);
+		while ($this->cursor < $this->length && strpos($string, $this->content{$this->cursor}) === false) {
+			$this->cursor++;
+		}
+		return substr($this->content, $anchor, $this->cursor - $anchor);
 	}
 
 	function scanWhilePattern($pattern) {
@@ -199,7 +199,7 @@ class SS_TemplateScanner {
 			$next = $this->scanForward();
 			if ($next == '-') {
 				$comment = $this->scanUntil('--%>');
-				//$this->emitComment($comment);
+				$this->emitComment($comment);
 				$this->cursor += 4;
 			}
 		}
