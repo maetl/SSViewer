@@ -5,7 +5,7 @@
 class SS_ViewableDataBinding {
 	
 	function write() {
-		echo "[call->]";
+		return "[call->]";
 	}
 	
 }
@@ -20,7 +20,22 @@ class SS_ViewableDataObj {
 	}
 	
 	function write() {
-		echo "[obj({$this->identifier})]";
+		return "[obj({$this->identifier})]";
+	}
+	
+}
+
+/**
+ * Parameter to apply to object call
+ */
+class SS_ViewableDataParameter {
+	
+	function __construct($parameter) {
+		$this->parameter = $parameter;
+	}
+	
+	function write() {
+		return "[arg({$this->parameter})]";
 	}
 	
 }
@@ -31,18 +46,7 @@ class SS_ViewableDataObj {
 class SS_VariableWriteScope {
 	
 	function write() {
-		echo "[write]";
-	}
-	
-}
-
-/**
- * Variable write scope
- */
-class SS_VariableWriteClose {
-	
-	function write() {
-		echo "[/write]";
+		return "[write]";
 	}
 	
 }

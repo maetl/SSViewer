@@ -23,20 +23,17 @@ class SS_TemplateStateBuffer {
 	}
 	
 	function emitText($chars) {
-		echo $chars;
 		$this->buffer .= $chars;
 	}
 	
 	function emitVariablePrintStart() {
 		$this->expression_chain->push(new SS_VariableWriteScope());
-		// $this->expression_chain = new SS_VariableWriteScope();
 	}
 	
 	function emitVariablePrintEnd() {
 		while($binding = $this->expression_chain->pop()) {
 			$this->buffer .= $binding->write();
 		}
-		// $this->expression_chain->evaluate();
 	}
 	
 	function emitBlockScope($keyword) {
@@ -59,7 +56,7 @@ class SS_TemplateStateBuffer {
 	}
 	
 	function emitViewableDataBindingParameter($param) {
-		//echo "Arg:[$param]";
+		$this->expression_chain->push(new SS_ViewableDataParameter($param));
 	}
 	
 	function emitComment($comment) {

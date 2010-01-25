@@ -33,7 +33,7 @@ class SS_TemplateTagDictionary {
 class SS_IfBlock {
 	
 	function write() {
-		echo "[if]";
+		return "[if]";
 	}
 	
 }
@@ -41,7 +41,7 @@ class SS_IfBlock {
 class SS_ElseBlock {
 	
 	function write() {
-		echo "[else]";
+		return "[else]";
 	}
 	
 }
@@ -49,7 +49,7 @@ class SS_ElseBlock {
 class SS_ElseIfBlock {
 	
 	function write() {
-		echo "[else_if]";
+		return "[else_if]";
 	}
 	
 }
@@ -57,7 +57,7 @@ class SS_ElseIfBlock {
 class SS_EndBlock {
 	
 	function write() {
-		echo "[end]";
+		return "[end]";
 	}
 	
 }
@@ -65,7 +65,7 @@ class SS_EndBlock {
 class SS_BaseTag {
 	
 	function write() {
-		echo "[base_tag]";
+		return "[base_tag]";
 	}
 	
 }
@@ -73,7 +73,7 @@ class SS_BaseTag {
 class SS_ControlBlock {
 
 	function write() {
-		echo "[control]";
+		return "[control]";
 	}
 	
 }
@@ -81,7 +81,7 @@ class SS_ControlBlock {
 class SS_IncludeTag {
 	
 	function write() {
-		echo "[include]";
+		return "[include]";
 	}
 	
 }
