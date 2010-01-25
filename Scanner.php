@@ -223,6 +223,8 @@ class SS_TemplateScanner {
 		do {
 			$this->enterStartState();
 		} while ($this->cursor < $this->length);
+		
+		return $this->template->getBuffer();
 	}
 	
 }
