@@ -1,8 +1,24 @@
 <?php
+
 /**
  * This is the legacy SilverStripe template engine.
  *
- * Need to reference the existing regex behavior in the new scanner.
+ * Need to reference the existing regex behavior from here in the new scanner.
+ */
+
+/**
+ * Stub the dependency for testing outside of sapphire.
+ */
+class Director {
+	
+	function isDev() {
+		return false;
+	}
+	
+}
+
+/**
+ * No changes have been made to this class.
  */
 class SSViewer {
 	
