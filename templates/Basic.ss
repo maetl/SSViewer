@@ -29,6 +29,7 @@
 	<%-- literal quoted symbols are now supported --%>
 	
 	$StringArg(symbol)
+	$StringArg(symbol_with_underscore, another_symbol)
 	$NumberArg(111)
 	$QuotedStringArg('hello world')
 	

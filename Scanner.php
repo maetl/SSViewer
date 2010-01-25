@@ -134,6 +134,8 @@ class SS_TemplateScanner {
 			$symbol = $this->scanIdentifier();
 			$this->template->emitViewableDataBindingParameter($symbol);
 			$this->enterArgumentList();
+		} else {
+			throw new Exception("Syntax error on line {$this->line}");
 		}
 	}
 	
