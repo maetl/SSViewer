@@ -26,5 +26,11 @@
 	
 	<% include Footer %>
 	
+	<%-- literal quoted symbols are now supported --%>
+	
+	$StringArg(symbol)
+	$NumberArg(111)
+	$QuotedStringArg('hello world')
+	
 </body>
 </html>

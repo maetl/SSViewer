@@ -122,13 +122,17 @@ class SS_TemplateScanner {
 		} elseif ($char == "'") {
 			$string = $this->scanString();
 			$this->template->emitViewableDataBindingParameter($string);
-			
 			$this->scanForward();
 			$this->enterArgumentList();
 		} elseif($this->isInteger($char)) {
 			$this->scanBack();
 			$integer = $this->scanInteger();
 			$this->template->emitViewableDataBindingParameter($integer);
+			$this->enterArgumentList();
+		} elseif($this->isIdentifier($char)) {
+			$this->scanBack();
+			$symbol = $this->scanIdentifier();
+			$this->template->emitViewableDataBindingParameter($symbol);
 			$this->enterArgumentList();
 		}
 	}
