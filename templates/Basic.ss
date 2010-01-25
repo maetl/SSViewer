@@ -24,5 +24,7 @@
 		
 	$Object.Element(2).Reference.Call('a', 'b', 'c')
 	
+	<% include Footer %>
+	
 </body>
 </html>

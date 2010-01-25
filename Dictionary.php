@@ -12,7 +12,8 @@ class SS_TemplateTagDictionary {
 		"end_if" => "SS_EndBlock",
 		"control" => "SS_ControlBlock",
 		"end_control" => "SS_EndBlock",
-		"base_tag" => "SS_BaseTag"
+		"base_tag" => "SS_BaseTag",
+		"include" => "SS_IncludeTag"
 	);
 	
 	/**
@@ -26,19 +27,6 @@ class SS_TemplateTagDictionary {
 			throw new Exception("<% $control_tag %> tag does not exist");
 		}
 	}
-	
-}
-
-/**
- * Interface for template control tags.
- */
-interface SS_TemplateBlock {
-	
-	function opensBlockScope();
-	
-	function closesBlockScope();
-	
-	function parseExpression();
 	
 }
 
@@ -90,7 +78,11 @@ class SS_ControlBlock {
 	
 }
 
-class SS_TemplateTagError extends Exception {
+class SS_IncludeTag {
+	
+	function write() {
+		echo "[include]";
+	}
 	
 }
 
