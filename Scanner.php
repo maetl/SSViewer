@@ -109,7 +109,9 @@ class SS_TemplateScanner {
 	}
 	
 	function scanBack() {
-		return $this->content{$this->cursor--};
+		if ($this->cursor < $this->length) {
+			return $this->content{$this->cursor--};
+		}
 	}
 	
 	function enterArgumentList() {

@@ -11,7 +11,12 @@ class SS_TemplateTagDictionary {
 		"else_if" => "SS_ElseIfBlock",
 		"end_if" => "SS_EndBlock",
 		"control" => "SS_ControlBlock",
+		"with" => "SS_ControlBlock",
+		"loop" => "SS_ControlBlock",
 		"end_control" => "SS_EndBlock",
+		"end_with" => "SS_EndBlock",
+		"end_loop" => "SS_EndBlock",
+		"end" => "SS_EndBlock",
 		"base_tag" => "SS_BaseTag",
 		"include" => "SS_IncludeTag"
 	);
